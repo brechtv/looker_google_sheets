@@ -1,14 +1,8 @@
-var BASE_URL = 'https://domain.looker.com:19999/api/3.0';
+// Replace this with your base domain e.g. https://mycompany.looker.com:19999/api/3.0
+var BASE_URL = 'https://mycompany.looker.com:19999/api/3.0';
+// Replace this with your API credentials
 var CLIENT_ID = 'XXX';
 var CLIENT_SECRET = 'XXX';
-
-function login() {
-    var post = {
-        'method': 'post'
-    };
-    var response = UrlFetchApp.fetch(BASE_URL + "/login?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET, post);
-    return JSON.parse(response.getContentText()).access_token;
-}
 
 /**
  * Returns the results or the sql of a Look
@@ -42,7 +36,7 @@ function LOOKER_RUN_LOOK(id, format) {
                 break;
         }
         // get request for the look
-        var response = UrlFetchApp.fetch("https://master.dev.looker.com:19999/api/3.0/looks/" + id + "/run/" + formatting, options);
+        var response = UrlFetchApp.fetch(BASE_URL + "/looks/" + id + "/run/" + formatting, options);
         // if it's csv, fill it in the cells, if it's the query, use one cell only, if not specified, throw error
         if (format == 1) {
             return Utilities.parseCsv(response.getContentText());
@@ -64,6 +58,7 @@ function LOOKER_RUN_LOOK(id, format) {
  * @customfunction
  */
 function LOOKER_GET_EXPLORES(model_name) {
+  try {
     var options = {
         'method': 'get',
         'headers': {
@@ -71,7 +66,7 @@ function LOOKER_GET_EXPLORES(model_name) {
         }
     };
 
-    var response = UrlFetchApp.fetch("https://master.dev.looker.com:19999/api/3.0/lookml_models/" + model_name, options);
+    var response = UrlFetchApp.fetch(BASE_URL + "/lookml_models/" + model_name, options);
     var explores = JSON.parse(response.getContentText()).explores;
     var result = [];
 
@@ -79,6 +74,9 @@ function LOOKER_GET_EXPLORES(model_name) {
         result.push(explores[i].name);
     }
     return result
+  } catch(err) {
+    return "Something went wrong. " + err
+  }
 }
 
 /**
@@ -89,6 +87,7 @@ function LOOKER_GET_EXPLORES(model_name) {
  * @customfunction
  */
 function LOOKER_GET_DATA_DICTIONARY(model_name) {
+  try {
 
   var options = {
         'method': 'get',
@@ -97,7 +96,7 @@ function LOOKER_GET_DATA_DICTIONARY(model_name) {
         }
     };
 
-    var response = UrlFetchApp.fetch("https://master.dev.looker.com:19999/api/3.0/lookml_models/" + model_name, options);
+    var response = UrlFetchApp.fetch(BASE_URL + "/lookml_models/" + model_name, options);
     var explores = JSON.parse(response.getContentText()).explores;
 
     var result = [];
@@ -107,7 +106,7 @@ function LOOKER_GET_DATA_DICTIONARY(model_name) {
     for (var i = 0; len = explores.length, i < len; i++) {
         var explore = explores[i].name;
 
-        var explore_results = UrlFetchApp.fetch("https://master.dev.looker.com:19999/api/3.0/lookml_models/" + model_name + "/explores/" + explore, options);
+        var explore_results = UrlFetchApp.fetch(BASE_URL + "/lookml_models/" + model_name + "/explores/" + explore, options);
         var dimensions = JSON.parse(explore_results.getContentText()).fields.dimensions;
         var measures = JSON.parse(explore_results.getContentText()).fields.measures;
 
@@ -120,4 +119,19 @@ function LOOKER_GET_DATA_DICTIONARY(model_name) {
         }
     }
     return result
+  } catch(err) {
+    return "Something went wrong. " + err
+}
+}
+
+function login() {
+  try{
+    var post = {
+        'method': 'post'
+    };
+    var response = UrlFetchApp.fetch(BASE_URL + "/login?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET, post);
+    return JSON.parse(response.getContentText()).access_token;
+  } catch(err) {
+    return "Could not login to Looker. " + err
+  }
 }
