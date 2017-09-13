@@ -2,11 +2,13 @@
 
 This Google Apps Script uses Looker API to load Looks, get data dictionaries, etc.
 
+
 ## Getting started
 
 * Save the script in the script editor *(Tools > Script Editor)*
 * Replace your Looker base domain and your client id & secret in the script and save
 * Go back to your spreadsheet, you can now use the custom formulas listed below
+
 
 ## Formulas
 
@@ -18,6 +20,7 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 
 `=LOOKER_GET_DATA_DICTIONARY("model_name")`
 * Return all dimensions and measures within all explores within the given model
+
 
 ## Adding other formulas
 
