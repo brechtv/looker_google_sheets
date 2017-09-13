@@ -1,6 +1,6 @@
-var BASE_URL = 'https://master.dev.looker.com:19999/api/3.0';
-var CLIENT_ID = 'qx3ZdZzgBd63rrFRP8XP';
-var CLIENT_SECRET = 'k2msSMZFdPVvqKGgvW8NwfpZ';
+var BASE_URL = 'https://domain.looker.com:19999/api/3.0';
+var CLIENT_ID = 'XXX';
+var CLIENT_SECRET = 'XXX';
 
 function login() {
     var post = {
