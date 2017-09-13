@@ -1,12 +1,12 @@
 # Looker API for Google Sheets
 
-This Google Apps Script allows you to load the results for any saved Look in looker.
+This Google Apps Script uses Looker API to load Looks, get data dictionaries, etc.
 
-You can query the results in the following way:
+## Getting started
 
-* Save the script in the script editor (Tools > Script Editor)
-* Replace your Looker base domain and your client id & secret
-* In your sheet, you can use the included custom formulas
+* Save the script in the script editor *(Tools > Script Editor)*
+* Replace your Looker base domain and your client id & secret in the script and save
+* Go back to your spreadsheet, you can now use the custom formulas listed below
 
 ## Formulas
 
@@ -18,3 +18,25 @@ You can query the results in the following way:
 
 `=LOOKER_GET_DATA_DICTIONARY("model_name")`
 * Return all dimensions and measures within all explores within the given model
+
+## Adding other formulas
+
+Looker's API is extensive and only a handful of endpoints are used here. You use other endpoints using `UrlFetchApp` ([docs](https://developers.google.com/apps-script/reference/url-fetch/url-fetch-app)).
+
+For example:
+
+```
+function LOOKER_OTHER_ENDPOINT(input) {
+
+  var options = {
+        'method': 'get',
+        'headers': {
+            'Authorization': 'token ' + token
+        }
+    };
+
+    var response = UrlFetchApp.fetch("https://yourcompany.looker.com/this/that" + input, options);
+
+    return Utilities.parseCsv(response.getContentText())
+  }
+```
