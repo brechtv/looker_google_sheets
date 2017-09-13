@@ -6,10 +6,15 @@ You can query the results in the following way:
 
 * Save the script in the script editor (Tools > Script Editor)
 * Replace your Looker base domain and your client id & secret
-* In your sheet, you can use the custom formula `RUN_LOOK(look_id, format)`
-  1. The first parameter is the Look ID, e.g. 1234, in number format
-  2. The second parameter is the formatting. Looker API has a lot more than csv or sql, but here we're only using those two. 1 will give you the results of the Look, 2 will give you the underlying query.
+* In your sheet, you can use the included custom formulas
 
-### Example use
+## Formulas
 
-`=RUN_LOOK(1789, 1)`
+`=LOOKER_RUN_LOOK(1789, 1)`
+* Return the results of a saved Look in csv (1) or the raw SQL (2)
+
+`=LOOKER_GET_EXPLORES("model_name")`
+* Return all explores within the given model
+
+`=LOOKER_GET_DATA_DICTIONARY("model_name")`
+* Return all dimensions and measures within all explores within the given model
