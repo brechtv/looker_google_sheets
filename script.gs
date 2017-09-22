@@ -1,8 +1,8 @@
 // Replace this with your base domain e.g. https://mycompany.looker.com:19999/api/3.0
-var BASE_URL = 'https://master.dev.looker.com:19999/api/3.0';
+var BASE_URL = 'https://yourdomain.looker.com:19999/api/3.0';
 // Replace this with your API credentials
-var CLIENT_ID = 'N7ktBQVXrtMTmnfhZFc5';
-var CLIENT_SECRET = 'CsP8V8CZ6w3Wdq66vmTswBDR';
+var CLIENT_ID = 'XXXX';
+var CLIENT_SECRET = 'XXXX';
 
 /**
  * Returns the results or the sql of a Look
