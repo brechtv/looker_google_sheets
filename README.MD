@@ -15,11 +15,17 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 `=LOOKER_RUN_LOOK(1789, 1)`
 * Return the results of a saved Look in csv (1) or the raw SQL (2)
 
+`=LOOKER_GET_LOOKS_BY_USER(123)`
+* Return all Looks from the user
+
+`=LOOKER_GET_LOOKS_BY_SPACE(456)`
+* Return all Looks within the given space
+
 `=LOOKER_GET_EXPLORES("model_name")`
-* Return all explores within the given model
+* Return all Explores within the given model
 
 `=LOOKER_GET_DATA_DICTIONARY("model_name")`
-* Return all dimensions and measures within all explores within the given model
+* Return all dimensions and measures within all Explores within the given model
 
 
 ## Adding other formulas
