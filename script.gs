@@ -111,11 +111,11 @@ function LOOKER_GET_DATA_DICTIONARY(model_name) {
         var measures = JSON.parse(explore_results.getContentText()).fields.measures;
 
         for (var j = 0; j < dimensions.length; j++) {
-            result.push([explore, "Dimension", dimensions[j].name, dimensions[j].description, dimensions[j].label, dimensions[j].type, "hidden: " + dimensions[j].hidden, dimensions[j].sql]);
+            result.push([explore, "Dimension", dimensions[j].name, dimensions[j].description, dimensions[j].label, dimensions[j].type, "hidden: " + dimensions[j].hidden, (dimensions[j].sql != null ? dimensions[j].sql : "")]);
         }
 
         for (var k = 0; k < measures.length; k++) {
-            result.push([explore, "Measure", measures[k].name, measures[k].description, measures[k].label, measures[k].type, "hidden: " + measures[k].hidden, dimensions[k].sql]);
+            result.push([explore, "Measure", measures[k].name, measures[k].description, measures[k].label, measures[k].type, "hidden: " + measures[k].hidden, (dimensions[k].sql != null ? dimensions[k].sql : "")]);
         }
     }
     return result
