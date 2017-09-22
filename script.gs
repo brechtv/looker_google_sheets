@@ -1,8 +1,8 @@
 // Replace this with your base domain e.g. https://mycompany.looker.com:19999/api/3.0
-var BASE_URL = 'https://mycompany.looker.com:19999/api/3.0';
+var BASE_URL = 'https://master.dev.looker.com:19999/api/3.0';
 // Replace this with your API credentials
-var CLIENT_ID = 'XXX';
-var CLIENT_SECRET = 'XXX';
+var CLIENT_ID = 'N7ktBQVXrtMTmnfhZFc5';
+var CLIENT_SECRET = 'CsP8V8CZ6w3Wdq66vmTswBDR';
 
 /**
  * Returns the results or the sql of a Look
@@ -53,7 +53,7 @@ function LOOKER_RUN_LOOK(id, format) {
 /**
  * Get explores for a certain model
  *
- * @param {"model_name"} id The Model Name
+ * @param {model_name} id The Model Name
  * @return All explores in the given Model
  * @customfunction
  */
@@ -77,6 +77,70 @@ function LOOKER_GET_EXPLORES(model_name) {
     }
     return result
   } catch(err) {
+    return "Something went wrong. " + err
+  }
+}
+
+/**
+ * Get all Looks by space
+ *
+ * @param {"space_id"} id The space ID
+ * @return All looks in the given space
+ * @customfunction
+ */
+function LOOKER_GET_LOOKS_BY_SPACE(space_id) {
+
+  try {
+   var options = {
+     'method': 'get',
+     'headers': {'Authorization':  'token '+ login()},
+   };
+
+    var response = UrlFetchApp.fetch(BASE_URL + "/looks/search?space_id=" + space_id.toString(), options);
+    var looks = JSON.parse(response.getContentText());
+    var result = [];
+
+    result.push(["Look ID", "Look Title", "Owner User ID", "Model Name", "Query ID"]);
+
+    for (var i = 0; len = looks.length, i < len; i++) {
+      result.push([looks[i].id, looks[i].title, looks[i].user_id, looks[i].model.id, looks[i].query_id]);
+    }
+
+    return result
+  } catch(err) {
+    Logger.log(err);
+    return "Something went wrong. " + err
+  }
+}
+
+/**
+ * Get all Looks by user
+ *
+ * @param {"user_id"} id The user ID
+ * @return All looks created by the user
+ * @customfunction
+ */
+function LOOKER_GET_LOOKS_BY_USER(user_id) {
+
+  try {
+   var options = {
+     'method': 'get',
+     'headers': {'Authorization':  'token '+ login()},
+   };
+
+    var response = UrlFetchApp.fetch(BASE_URL + "/looks/search?user_id=" + user_id.toString(), options);
+    var looks = JSON.parse(response.getContentText());
+    var result = [];
+
+    result.push(["Look ID", "Look Title", "Owner User ID", "Model Name", "Query ID"]);
+
+    for (var i = 0; len = looks.length, i < len; i++) {
+      result.push([looks[i].id, looks[i].title, looks[i].user_id, looks[i].model.id, looks[i].query_id]);
+    }
+
+    return result
+  } catch(err) {
+    Logger.log(err);
     return "Something went wrong. " + err
   }
 }
