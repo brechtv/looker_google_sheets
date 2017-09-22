@@ -1,8 +1,3 @@
-// Replace this with your base domain e.g. https://mycompany.looker.com:19999/api/3.0
-var BASE_URL = 'https://mycompany.looker.com:19999/api/3.0';
-// Replace this with your API credentials
-var CLIENT_ID = 'XXX';
-var CLIENT_SECRET = 'XXX';
 
 /**
  * Returns the results or the sql of a Look
@@ -70,6 +65,8 @@ function LOOKER_GET_EXPLORES(model_name) {
     var explores = JSON.parse(response.getContentText()).explores;
     var result = [];
 
+    Logger.log(response.getContentText());
+
     for (var i = 0; i < explores.length; i++) {
         result.push(explores[i].name);
     }
@@ -87,7 +84,6 @@ function LOOKER_GET_EXPLORES(model_name) {
  * @customfunction
  */
 function LOOKER_GET_DATA_DICTIONARY(model_name) {
-  model_name = "stackoverflow"
   try {
 
   var options = {
@@ -134,6 +130,7 @@ function login() {
     var response = UrlFetchApp.fetch(BASE_URL + "/login?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET, post);
     return JSON.parse(response.getContentText()).access_token;
   } catch(err) {
-    return "Could not login to Looker. " + err
+    Logger.log(err);
+    return "Could not login to Looker. Check your credentials.";
   }
 }
