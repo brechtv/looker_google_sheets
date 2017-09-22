@@ -87,6 +87,7 @@ function LOOKER_GET_EXPLORES(model_name) {
  * @customfunction
  */
 function LOOKER_GET_DATA_DICTIONARY(model_name) {
+  model_name = "stackoverflow"
   try {
 
   var options = {
@@ -98,24 +99,25 @@ function LOOKER_GET_DATA_DICTIONARY(model_name) {
 
     var response = UrlFetchApp.fetch(BASE_URL + "/lookml_models/" + model_name, options);
     var explores = JSON.parse(response.getContentText()).explores;
-
     var result = [];
 
-    result.push(["Explore Name", "Type", "Name", "Description", "Label", "Type", "Hidden", "SQL"]);
+    result.push(["Connection", "Explore Name", "View Name", "Field Type", "Name", "Label", "Type", "Description", "Hidden", "SQL", "Source"]);
 
     for (var i = 0; len = explores.length, i < len; i++) {
         var explore = explores[i].name;
 
         var explore_results = UrlFetchApp.fetch(BASE_URL + "/lookml_models/" + model_name + "/explores/" + explore, options);
+
+        var connection = JSON.parse(explore_results.getContentText()).connection_name;
         var dimensions = JSON.parse(explore_results.getContentText()).fields.dimensions;
         var measures = JSON.parse(explore_results.getContentText()).fields.measures;
 
         for (var j = 0; j < dimensions.length; j++) {
-            result.push([explore, "Dimension", dimensions[j].name, dimensions[j].description, dimensions[j].label, dimensions[j].type, "hidden: " + dimensions[j].hidden, (dimensions[j].sql != null ? dimensions[j].sql : "")]);
+            result.push([connection, explore, dimensions[j].view, "Dimension", dimensions[j].name, dimensions[j].label, dimensions[j].type, dimensions[j].description,  "hidden: " + dimensions[j].hidden, (dimensions[j].sql != null ? dimensions[j].sql : ""), dimensions[j].source_file]);
         }
 
         for (var k = 0; k < measures.length; k++) {
-            result.push([explore, "Measure", measures[k].name, measures[k].description, measures[k].label, measures[k].type, "hidden: " + measures[k].hidden, (dimensions[k].sql != null ? dimensions[k].sql : "")]);
+            result.push([connection, explore, measures[k].view, "Measure", measures[k].name, measures[k].label, measures[k].type, measures[k].description, "hidden: " + measures[k].hidden, (measures[k].sql != null ? measures[k].sql : ""), measures[k].source_file]);
         }
     }
     return result
