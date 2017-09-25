@@ -22,6 +22,9 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 `=LOOKER_GET_LOOKS_BY_SPACE(456)`
 * Return all Looks within the given space
 
+`=LOOKER_GET_LOOKS_BY_DASHBOARD(789)`
+* Return all Looks on a dashboard
+
 `=LOOKER_GET_EXPLORES("model_name")`
 * Return all Explores within the given model
 

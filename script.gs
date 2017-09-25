@@ -7,8 +7,8 @@ var CLIENT_SECRET = 'XXXX';
 /**
  * Returns the results or the sql of a Look
  *
- * @param {123} id The unique ID of the Look
- * @param {1} format 1 for csv, 2 for raw sql
+ * @param {number} id The unique ID of the Look
+ * @param {number} format 1 for csv, 2 for raw sql
  * @return The Look results data
  * @customfunction
  */
@@ -53,7 +53,7 @@ function LOOKER_RUN_LOOK(id, format) {
 /**
  * Get explores for a certain model
  *
- * @param {model_name} id The Model Name
+ * @param {string} id The Model Name
  * @return All explores in the given Model
  * @customfunction
  */
@@ -84,7 +84,7 @@ function LOOKER_GET_EXPLORES(model_name) {
 /**
  * Get all Looks by space
  *
- * @param {"space_id"} id The space ID
+ * @param {number} id The space ID
  * @return All looks in the given space
  * @customfunction
  */
@@ -116,7 +116,43 @@ function LOOKER_GET_LOOKS_BY_SPACE(space_id) {
 /**
  * Get all Looks by user
  *
- * @param {"user_id"} id The user ID
+ * @param {number} id The user ID
+ * @return All looks created by the user
+ * @customfunction
+ */
+function LOOKER_GET_LOOKS_BY_DASHBOARD(dashboard_id) {
+  var dashboard_id = 1009;
+
+  try {
+   var options = {
+     'method': 'get',
+     'headers': {'Authorization':  'token '+ login()},
+   };
+
+    var response = UrlFetchApp.fetch(BASE_URL + "/dashboards/" + dashboard_id.toString(), options);
+    var elements = JSON.parse(response.getContentText()).dashboard_elements;
+    var result = [];
+
+    result.push(["Look ID", "Look Title"]);
+
+    for (var i = 0; len = elements.length, i < len; i++) {
+      if (elements[i].look_id != null) {
+        result.push([elements[i].look_id, elements[i].title]);
+      }
+    }
+
+    return result
+
+  } catch(err) {
+    Logger.log(err);
+    return "Something went wrong. " + err
+  }
+}
+
+/**
+ * Get all Looks by user
+ *
+ * @param {number} id The user ID
  * @return All looks created by the user
  * @customfunction
  */
@@ -148,7 +184,7 @@ function LOOKER_GET_LOOKS_BY_USER(user_id) {
 /**
  * Get all fields that are used within explores with the given model
  *
- * @param {"model_name"} id The model name
+ * @param {string} id The model name
  * @return All dimensions and measures in the given model
  * @customfunction
  */
