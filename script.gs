@@ -114,14 +114,13 @@ function LOOKER_GET_LOOKS_BY_SPACE(space_id) {
 }
 
 /**
- * Get all Looks by user
+ * Get all Looks by dashboard
  *
- * @param {number} id The user ID
- * @return All looks created by the user
+ * @param {number} id The dashboard ID
+ * @return All looks on the given dashboard
  * @customfunction
  */
 function LOOKER_GET_LOOKS_BY_DASHBOARD(dashboard_id) {
-  var dashboard_id = 1009;
 
   try {
    var options = {
