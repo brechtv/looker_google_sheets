@@ -7,7 +7,9 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 ## Install
 
 * Save the script in the script editor *(Tools > Script Editor)*
-* Replace your Looker base domain and your client id & secret in the script and save
+* Refresh your Sheet, you should now have a "Looker API Credentials" menu on top.
+* Click the menu and set your base URL, client id and client secret
+> *Note*: these are stored on the spreadsheet environment, anyone with access to the sheet will be able to use them. Switch to [userProperties](https://developers.google.com/apps-script/guides/properties) to make them user specific. This might break the formulas for users without API creds.
 * Go back to your spreadsheet, you can now use the custom formulas listed below
 
 
