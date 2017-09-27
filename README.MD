@@ -2,7 +2,7 @@
 
 This Google Apps Script uses Looker API to load Looks, get data dictionaries, etc.
 
-> fair warning: I'm still adding stuff so check back for the latest version, feel free to fork and open a pull request.
+> **Fair warning**: I'm still adding stuff so check back for the latest version, feel free to fork and open a pull request.
 
 ## Install
 
