@@ -324,3 +324,4 @@ function login() {
     Logger.log(err);
     return false;
   }
+}
