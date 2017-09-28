@@ -261,7 +261,7 @@ function LOOKER_GET_DATA_DICTIONARY(model_name) {
 // set credentials via prompt
 function setCred() {
   var ui = SpreadsheetApp.getUi();
-  var base_url_input = ui.prompt('Set your Looker API credentials', 'Base URL:', ui.ButtonSet.OK_CANCEL);
+  var base_url_input = ui.prompt('Set your Looker API credentials', 'Base URL (e.g. https://yourdomain.looker.com:19999/api/3.0):', ui.ButtonSet.OK_CANCEL);
   var client_id_input = ui.prompt('Set your Looker API credentials', 'Client ID:', ui.ButtonSet.OK_CANCEL);
   var client_id_secret = ui.prompt('Set your Looker API credentials', 'Client Secret:', ui.ButtonSet
     .OK_CANCEL);
