@@ -33,6 +33,8 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 `=LOOKER_GET_DATA_DICTIONARY("model_name")`
 * Return all dimensions and measures within all Explores within the given model
 
+`=LOOKER_GET_USERS()`
+* Return Looker users
 
 ## Adding other formulas
 
@@ -44,13 +46,13 @@ For example:
 function LOOKER_OTHER_ENDPOINT(input) {
 
   var options = {
-        'method': 'get',
-        'headers': {
-            'Authorization': 'token ' + token
+        "method": "get",
+        "headers": {
+            "Authorization": "token " + token
         }
     };
 
-    var response = UrlFetchApp.fetch("https://yourcompany.looker.com/this/that" + input, options);
+    var response = UrlFetchApp.fetch("https://yourcompany.looker.com:19999/this/that" + input, options);
 
     return Utilities.parseCsv(response.getContentText())
   }
