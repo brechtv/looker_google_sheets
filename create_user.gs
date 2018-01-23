@@ -11,27 +11,29 @@ var CLIENT_SECRET = 'XXX';
  * Creates a new user in Looker
  *
  * @param {string} email The user email address
- * @param {string} opt_roles Comma-separated roles (e.g. "1,2,3") - optional
+ * @param {string} roles Comma-separated roles (e.g. "1,2,3")
  * @return The user setup link
  * @customfunction
  */
-function CREATE_LOOKER_USER(email, opt_roles) {
-
+function CREATE_LOOKER_USER(email, roles) {
+  if(email.match(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/g) == null) {
+     return "Not a valid email address.";
+  } else {
     var existing_user = checkExistingUser(email);
     if (existing_user.length == 0) {
         Logger.log("User does not yet exist. Creating new user...");
         var user_id = createNewUser();
-        if(roles != null) {addRoles(user_id, roles)};
         addEmail(email, user_id);
+        if(roles != null || roles != "") {addRoles(user_id, roles)};
         var reset_token = getPasswordResetToken(user_id);
-        var setup_url = BASE_URL.split(/(:19999)/)[0] + '/account/setup/' +
-            reset_token;
+        var setup_url = BASE_URL.split(/(:19999)/)[0] + '/account/setup/' + reset_token;
         return setup_url;
     }
     else {
         Logger.log("No new user created, user " + email +
             " already exists.");
         return "User " + email + " already exists!";
+    }
     }
 }
 
@@ -76,21 +78,22 @@ function addEmail(email, user_id) {
 }
 
 function addRoles(user_id, roles) {
-  var roles_array = roles.split(',').map(function(role) {return role.trim()});
+
+  var roles_array = roles.toString().split(",").map(function(role) {return role.trim()});
   Logger.log(roles_array);
 
   var options = {
         'method': 'put',
         'headers': {
             'Authorization': 'token ' + login()
-        },
-    'payload': JSON.stringify(roles_array)
+        }
     };
+
+  options.payload = JSON.stringify(roles_array)
 
     var response = UrlFetchApp.fetch(BASE_URL + "/users/" + user_id +
         "/roles", options);
 
-  Logger.log(response);
 
 }
 
