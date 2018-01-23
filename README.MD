@@ -35,12 +35,12 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 * Return Looker users
 
 
-## Creating new Looker users
+## Creating new users
 
 This currently lives in a separate file. The custom function takes an email address and creates a new user, unless the user already exists. The function returns the Looker setup URL, for the user to add details and set a password. The script can be easily expanded to include e.g. a mail merge, to automatically send an email with the setup URL to the new user.
 
-`=CREATE_LOOKER_USER(email_address)`
-* script in a separate file, creates new users with their email and returns setup URL for new users.
+`=CREATE_LOOKER_USER(email_address, roles)`
+* script in a separate file, creates new users with their email and (optional) assigned roles, returns setup URL for new users. For example `=CREATE_LOOKER_USER("brecht@looker.com", "1,2")`.
 
 ## Adding other formulas
 
