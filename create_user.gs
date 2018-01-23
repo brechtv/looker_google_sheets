@@ -11,11 +11,11 @@ var CLIENT_SECRET = 'XXX';
  * Creates a new user in Looker
  *
  * @param {string} email The user email address
- * @param {string} roles Comma-separated roles (e.g. "1,2,3")
+ * @param {string} opt_roles Comma-separated roles (e.g. "1,2,3") - optional
  * @return The user setup link
  * @customfunction
  */
-function CREATE_LOOKER_USER(email, roles) {
+function CREATE_LOOKER_USER(email, opt_roles) {
 
     var existing_user = checkExistingUser(email);
     if (existing_user.length == 0) {
