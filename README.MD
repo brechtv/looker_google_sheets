@@ -2,8 +2,6 @@
 
 This Google Apps Script uses Looker API to load Looks, get data dictionaries, etc.
 
-> **Fair warning**: I'm still adding stuff so check back for the latest version, feel free to fork and open a pull request.
-
 ## Install
 
 * Save the script in the script editor *(Tools > Script Editor)*
@@ -35,6 +33,13 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 
 `=LOOKER_GET_USERS()`
 * Return Looker users
+
+## Creating new Looker users
+
+This currently lives in a separate file. The custom function takes an email address and creates a new user, unless the user already exists. The function returns the Looker setup URL, for the user to add details and set a password. The script can be easily expanded to include e.g. a mail merge, to automatically send an email with the setup URL to the new user.
+
+`=CREATE_LOOKER_USER(email_address)`
+* script in a separate file, creates new users with their email and returns setup URL for new users.
 
 ## Adding other formulas
 
