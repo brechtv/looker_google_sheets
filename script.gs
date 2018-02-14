@@ -26,7 +26,7 @@ function onOpen() {
  * @return The Look results data
  * @customfunction
  */
-function LOOKER_RUN_LOOK(id, format) {
+function LOOKER_RUN_LOOK(id, opt_format, opt_limit) {
     try {
         var options = {
             "method": "get",
@@ -38,7 +38,7 @@ function LOOKER_RUN_LOOK(id, format) {
         // set formatting to either csv or the raw sql query since sheets is limited
         var formatting;
         // convert param
-        switch (format) {
+        switch (opt_format) {
             case 1:
                 formatting = "csv";
                 break;
@@ -49,18 +49,29 @@ function LOOKER_RUN_LOOK(id, format) {
                 formatting = "csv";
         }
 
+        // set a custom limit
+        var limit;
+        if(opt_limit) {
+          limit = opt_limit;
+          // else use the 5k default
+        } else if (opt_limit == -1) {
+            limit = -1;
+        } else {
+          limit = 5000;
+        }
+
         // get request for the look
-        var response = UrlFetchApp.fetch(BASE_URL + "/looks/" + id + "/run/" + formatting, options);
+        var response = UrlFetchApp.fetch(BASE_URL + "/looks/" + id + "/run/" + formatting + "?limit=" + limit, options);
 
         // if it's csv, fill it in the cells, if it's the query, use one cell only, if not specified, throw error
-        if (format == 1) {
+        if (opt_format == 1) {
             return Utilities.parseCsv(response.getContentText());
-        } else if (format == 2)
+        } else if (opt_format == 2)
           {
             return response.getContentText();
           }
         else {
-            return "Please specify format: 1 (results) or 2 (sql query)";
+            return Utilities.parseCsv(response.getContentText());
         }
     } catch (err) {
         return "Uh oh! Something went wrong. Check your API credentials and if you're passing the correct parameters and that your Look exists!";

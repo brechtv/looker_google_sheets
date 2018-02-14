@@ -13,8 +13,11 @@ This Google Apps Script uses Looker API to load Looks, get data dictionaries, et
 
 ## How to use
 
-`=LOOKER_RUN_LOOK(1789, 1)`
-* Return the results of a saved Look in csv (1) or the raw SQL (2)
+`=LOOKER_RUN_LOOK(1789, 1, 10000)`
+* Return the results of a saved Look in csv (`1`) or the raw SQL (`2`). The third parameter is the query limit.
+  - Look ID (*required*)
+  - Format (optional), `1` (results), `2` (SQL). Default value is `1` (results)
+  - Query limit (optional), Default value is `5000`. `-1` for no limit.
 
 `=LOOKER_GET_LOOKS_BY_USER(123)`
 * Return all Looks from the user
