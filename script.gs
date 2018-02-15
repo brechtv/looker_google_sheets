@@ -22,7 +22,8 @@ function onOpen() {
  * Returns the results or the sql of a Look
  *
  * @param {number} id The unique ID of the Look
- * @param {number} format 1 for csv, 2 for raw sql
+ * @param {number} opt_format 1 for csv, 2 for raw sql - defaults to csv (optional)
+  * @param {number} opt_limit the query limit - defaults to 5000 if empty (optional)
  * @return The Look results data
  * @customfunction
  */
